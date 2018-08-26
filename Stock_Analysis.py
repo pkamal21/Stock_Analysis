@@ -46,8 +46,21 @@ gm = pd.read_csv("GM_Stock.csv")
 
 
 ##Scatter Matrix to see the relationship between the three "CAR" companies
-from pandas.plotting import scatter_matrix
-car_comp = pd.concat([tesla['Open'],gm['Open'],ford['Open']],axis=1)
-car_comp.columns = ['Tesla Open','GM Open','Ford Open']
-scatter_matrix(car_comp,figsize=(5,5),alpha=0.2,hist_kwds={'bins':50});
+# from pandas.plotting import scatter_matrix
+# car_comp = pd.concat([tesla['Open'],gm['Open'],ford['Open']],axis=1)
+# car_comp.columns = ['Tesla Open','GM Open','Ford Open']
+# scatter_matrix(car_comp,figsize=(5,5),alpha=0.2,hist_kwds={'bins':50});
+# plt.show()
+
+
+#PLotting returns of the 3 companies
+tesla['Returns'] = (tesla['Close']/tesla['Close'].shift(1)) - 1
+ford['Returns'] = ford['Close'].pct_change(1)
+gm['Returns'] = gm['Close'].pct_change(1)
+print(gm.head())
+
+tesla['Returns'].hist(bins=100,label='Tesla',figsize=(10,8),alpha=0.5)
+gm['Returns'].hist(bins=100,label='GM',alpha=0.5)
+ford['Returns'].hist(bins=100,label='Ford',alpha=0.5)
+plt.legend()
 plt.show()
